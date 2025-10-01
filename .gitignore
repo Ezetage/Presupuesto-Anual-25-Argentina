@@ -1,0 +1,16 @@
+# Ignorar carpeta de datos de Postgres
+data/
+
+# Ignorar entornos virtuales
+venv/
+
+# Archivos de Python compilados
+*.pyc
+__pycache__/
+
+# Configuración local de VS Code
+.vscode/
+
+# Archivos temporales de sistema
+.DS_Store
+Thumbs.db
