@@ -13,6 +13,7 @@ __pycache__/
 
 # Datos crudos
 raw_data/
+*.xlsx
 
 # Archivos temporales de sistema
 .DS_Store

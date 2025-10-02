@@ -1,0 +1,27 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+COPY extract ./extract/
+COPY transform ./transform/
+COPY create ./create/
+COPY load ./load/
+COPY pipeline ./pipeline/
+
+COPY requirements.txt .
+
+# Variables de entorno por defecto para la conexión a la base de datos
+ENV DB_USER=user \
+	DB_PASS=password \
+	DB_HOST=postgres_presupuesto \
+	DB_PORT=5432 \
+	DB_NAME=presupuesto2025
+
+# Instalar dependencias
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Asegurar que /app esté en PYTHONPATH para imports de módulos
+ENV PYTHONPATH="/app"
+
+# Comando por defecto: ejecutar pipeline
+CMD ["python", "pipeline/run_pipeline.py"]

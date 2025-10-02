@@ -1,0 +1,7 @@
+tabulate
+psycopg2-binary
+pandas==2.1.1
+numpy==1.26.4
+SQLAlchemy
+requests
+openpyxl
