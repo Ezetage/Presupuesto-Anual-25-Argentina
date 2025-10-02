@@ -39,19 +39,6 @@ class Subjurisdiccion(Base):
     credito_devengado = Column(Float)
     credito_pagado = Column(Float)
 
-class Obra(Base):
-    __tablename__ = "obra"
-    id = Column(Integer, primary_key=True, autoincrement=True)
-    impacto_presupuestario_fecha = Column(Date)
-    impacto_presupuestario_anio = Column(Integer)
-    impacto_presupuestario_mes = Column(Integer)
-    obra_desc = Column(String)
-    credito_presupuestado = Column(Float)
-    credito_vigente = Column(Float)
-    credito_comprometido = Column(Float)
-    credito_devengado = Column(Float)
-    credito_pagado = Column(Float)
-
 class Entidad(Base):
     __tablename__ = "entidad"
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -59,6 +46,19 @@ class Entidad(Base):
     impacto_presupuestario_anio = Column(Integer)
     impacto_presupuestario_mes = Column(Integer)
     entidad_desc = Column(String)
+    credito_presupuestado = Column(Float)
+    credito_vigente = Column(Float)
+    credito_comprometido = Column(Float)
+    credito_devengado = Column(Float)
+    credito_pagado = Column(Float)
+
+class Obra(Base):
+    __tablename__ = "obra"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    impacto_presupuestario_fecha = Column(Date)
+    impacto_presupuestario_anio = Column(Integer)
+    impacto_presupuestario_mes = Column(Integer)
+    obra_desc = Column(String)
     credito_presupuestado = Column(Float)
     credito_vigente = Column(Float)
     credito_comprometido = Column(Float)
