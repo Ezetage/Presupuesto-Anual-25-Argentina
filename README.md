@@ -20,18 +20,6 @@ Este dataset contiene la información del presupuesto nacional de Argentina para
 4. **Al día de la fecha, ¿Cuánto es el monto devengado del total presupuestado?**
 5. **¿Cuáles son las principales obras y proyectos con mayor presupuesto asignado y su estado de ejecución?**
 
-### Consultas realizadas y datos en el Excel generado
-
-El archivo Excel generado contiene los resultados de las siguientes consultas principales:
-
-1. Monto total del presupuesto para el año 2025.
-2. Monto asignado por jurisdicción y subjurisdicción.
-3. Jurisdicción con mayor asignación presupuestaria en 2025.
-4. Monto devengado del total presupuestado al día de la fecha.
-5. Listado de las principales obras y proyectos, con su presupuesto asignado, vigente, devengado y pagado.
-
----
-
 ## Resolución de los ejercicios y ejecución end-to-end
 
 Para resolver los ejercicios del proyecto se siguió el siguiente flujo:
