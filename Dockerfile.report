@@ -1,0 +1,17 @@
+FROM python:3.11-slim
+
+WORKDIR /app
+
+
+COPY report ./report/
+COPY requirements.txt ./
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+ENV DB_USER=user \
+    DB_PASS=password \
+    DB_HOST=postgres_presupuesto \
+    DB_PORT=5432 \
+    DB_NAME=presupuesto2025
+
+CMD ["python", "report/report_queries.py"]

@@ -1,55 +1,39 @@
-# transform.py
 import pandas as pd
 import os
+import calendar
 
 RAW_CSV = "raw_data/credito_vigente_2025.csv"
 
 def transform_data():
-    # Verificamos que exista el archivo crudo
-    if not os.path.exists(RAW_CSV):
-        raise FileNotFoundError(f"No se encontró el CSV crudo en {RAW_CSV}")
+    try:
+        if not os.path.exists(RAW_CSV):
+            raise FileNotFoundError(f"No se encontró el CSV crudo en {RAW_CSV}")
+        df_raw = pd.read_csv(RAW_CSV)
 
-    # Leemos el CSV crudo
-    df_raw = pd.read_csv(RAW_CSV)
+        # Crear columna mes como fecha (primer día del mes)
+        if "impacto_presupuestario_anio" in df_raw.columns and "impacto_presupuestario_mes" in df_raw.columns:
+            df_raw["mes_date"] = pd.to_datetime(
+                df_raw["impacto_presupuestario_anio"].astype(str) + "-" +
+                df_raw["impacto_presupuestario_mes"].astype(str) + "-01",
+                errors="coerce"
+            )
+            meses_es = {
+                1: "Enero", 2: "Febrero", 3: "Marzo", 4: "Abril", 5: "Mayo", 6: "Junio",
+                7: "Julio", 8: "Agosto", 9: "Septiembre", 10: "Octubre", 11: "Noviembre", 12: "Diciembre"
+            }
+            df_raw["mes_nombre"] = df_raw["impacto_presupuestario_mes"].map(meses_es)
 
-    # Convertimos la fecha a tipo datetime
-    if "impacto_presupuestario_fecha" in df_raw.columns:
-        df_raw["impacto_presupuestario_fecha"] = pd.to_datetime(df_raw["impacto_presupuestario_fecha"], errors='coerce')
-
-    # ---------- Crear DataFrames para cada tabla ----------
-    df_jurisdiccion = df_raw[[
-        "impacto_presupuestario_fecha", "impacto_presupuestario_anio", "impacto_presupuestario_mes",
-        "jurisdiccion_desc", "credito_presupuestado", "credito_vigente",
-        "credito_comprometido", "credito_devengado", "credito_pagado"
-    ]].copy()
-
-    df_subjurisdiccion = df_raw[[
-        "impacto_presupuestario_fecha", "impacto_presupuestario_anio", "impacto_presupuestario_mes",
-        "subjurisdiccion_desc", "credito_presupuestado", "credito_vigente",
-        "credito_comprometido", "credito_devengado", "credito_pagado"
-    ]].copy()
-
-    df_entidad = df_raw[[
-        "impacto_presupuestario_fecha", "impacto_presupuestario_anio", "impacto_presupuestario_mes",
-        "entidad_desc", "credito_presupuestado", "credito_vigente",
-        "credito_comprometido", "credito_devengado", "credito_pagado"
-    ]].copy()
-
-    df_obra = df_raw[[
-        "impacto_presupuestario_fecha", "impacto_presupuestario_anio", "impacto_presupuestario_mes",
-        "obra_desc", "credito_presupuestado", "credito_vigente",
-        "credito_comprometido", "credito_devengado", "credito_pagado"
-    ]].copy()
-
-    print("✅ Transformación completada: 4 DataFrames listos")
-
-    return df_jurisdiccion, df_subjurisdiccion, df_entidad, df_obra
-
-
-if __name__ == "__main__":
-    df_jurisdiccion, df_subjurisdiccion, df_entidad, df_obra = transform_data()
-    # Podemos ver un resumen rápido
-    print("Jurisdicción:", df_jurisdiccion.shape)
-    print("Subjurisdicción:", df_subjurisdiccion.shape)
-    print("Entidad:", df_entidad.shape)
-    print("Obra:", df_obra.shape)
+        columnas_base = [
+            "mes_date", "impacto_presupuestario_anio", "impacto_presupuestario_mes", "mes_nombre",
+            "credito_presupuestado", "credito_vigente",
+            "credito_comprometido", "credito_devengado", "credito_pagado"
+        ]
+        df_jurisdiccion = df_raw[columnas_base + ["jurisdiccion_desc"]].copy()
+        df_subjurisdiccion = df_raw[columnas_base + ["subjurisdiccion_desc"]].copy()
+        df_entidad = df_raw[columnas_base + ["entidad_desc"]].copy()
+        df_obra = df_raw[columnas_base + ["obra_desc"]].copy()
+        print("✅ Transformación completada: 4 DataFrames listos")
+        return df_jurisdiccion, df_subjurisdiccion, df_entidad, df_obra
+    except Exception as e:
+        print(f"❌ Error en la transformación de datos: {e}")
+        raise

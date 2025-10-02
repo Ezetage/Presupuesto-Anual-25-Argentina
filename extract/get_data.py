@@ -12,7 +12,6 @@ HEADERS = {
 }
 
 COLUMNS = [
-    "impacto_presupuestario_fecha",
     "impacto_presupuestario_anio",
     "impacto_presupuestario_mes",
     "jurisdiccion_desc",
@@ -34,17 +33,12 @@ BODY = {
 
 def extract_data():
     print("📥 Descargando datos crudos del Presupuesto 2025...")
-
-    # Hacemos POST a la API
-    response = requests.post(URL, headers=HEADERS, json=BODY)
-    response.raise_for_status()
-
-    # Se gaurda CSV
-    output_file = os.path.join(OUTPUT_DIR, "credito_vigente_2025.csv")
-    with open(output_file, "wb") as f:
-        f.write(response.content)
-
-    print(f"✅ Archivo guardado en {output_file}")
-
-if __name__ == "__main__":
-    extract_data()
+    try:
+        response = requests.post(URL, headers=HEADERS, json=BODY)
+        response.raise_for_status()
+        output_file = os.path.join(OUTPUT_DIR, "credito_vigente_2025.csv")
+        with open(output_file, "wb") as f:
+            f.write(response.content)
+        print(f"✅ Archivo guardado en {output_file}")
+    except Exception as e:
+        print(f"❌ Error al descargar datos: {e}")
