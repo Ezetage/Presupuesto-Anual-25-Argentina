@@ -11,6 +11,9 @@ __pycache__/
 # Configuración local de VS Code
 .vscode/
 
+# Datos crudos
+raw_data/
+
 # Archivos temporales de sistema
 .DS_Store
 Thumbs.db
